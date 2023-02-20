@@ -1,5 +1,5 @@
 <?php
-  include_once"conns.php";
+  include_once "conns.php";
 
   if(isset($_POST['submit'])){
     $reg_number = $_POST['reg_number'];
@@ -21,28 +21,30 @@
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_folder = 'uploaded_st/'.$image;
 
-    $query1 = mysql_query("SELECT * FROM `st_data` WHERE reg_number = '$reg_number'", $connection);
+    $query1 = mysqli_query($connection, "SELECT * FROM st_data WHERE reg_number = '$reg_number'");
 
-    if(mysql_num_rows($query1) > 0){
-      $message[] = 'User Already Exit';
+    if(mysqli_num_rows($query1) > 0){
+      $message[] = 'User Already Exit!';
     }else{
       if($reg_number != $creg_number){
-        $message[] = 'Confirm Password Not March!';
-      }elseif($image_size > 2000000){
-        $message[] = 'Image Size Is To Large';
-      }else{
-        $insert = mysql_query("INSERT INTO `st_data`(`reg_number`, `first_name`, `surname`, `other_name`, `gender`, `date_birth`, `year`, `sessions`, `term`, `classs`, `mail`, `parent_gsm`, `nin_number`, `image`) VALUES('$reg_number','$first_name','$surname','$other_name','$gender','$date_birth','$year','$sessions','$term','$classs','$mail','$parent_gsm','$nin_number','$image')", $connection);
-    
+        $message[] = 'Comfirm Registration Number Not March!';
+      }
+      elseif ($image_size > 20000000) {
+        $message[] = 'Image Size Is Too Large!';
+      }
+      else{
+        
+          $upload = mysqli_query($connection, "INSERT INTO st_data(`reg_number`, `first_name`, `surname`, `other_name`, `gender`, `date_birth`, `year`, `sessions`, `term`, `classs`, `mail`, `parent_gsm`, `nin_number`, `image`) VALUES('$reg_number','$first_name','$surname','$other_name','$gender','$date_birth','$year','$sessions','$term','$classs','$mail','$parent_gsm','$nin_number','$image')");
+          if($upload){
+            move_uploaded_file($image_tmp_name,$image_folder);
+            $message[] = 'Registration Successfully!';
+            header('location:home.php');
 
-        if($insert){
-          move_uploaded_file($image_tmp_name, $image_folder);
-          $message[] = 'Registration Seccessfully';
-          header('location:stu_log.php');
-        }else{
-          $message[] = 'Registration Failed';
-        }
+          }
       }
     }
+
+   
   }
 
 
@@ -231,7 +233,7 @@
           <label for="userName" class="text-primary">Enter NIN Number:</label>
 		    	<input type="number" name="nin_number" placeholder="NIN Number" class="form-control mt-3 mb-2 form-control-lg" required>
           <label for="userName" class="text-primary">Upload Image:</label>
-			    <input type="file" name="image" accept="image/jpeg, image/jpg, image/png" class="form-control mt-2 mb-3 form-control-lg" required>
+			    <input type="file" name="image" accept="image/jpeg, image/jpg, image/png" class="form-control mt-2 mb-3 form-control-lg">
 			
           <button type="submit" name="submit" class="btn btn-primary mt-2 float-end hover">Submit</button>
         </div>

@@ -1,11 +1,11 @@
 <?php
-	include"conns.php";
+	include "conns.php";
 
 	if(isset($_POST['posts'])){
 		$school_post = $_POST['school_post'];
 		$date_time = $_POST['date_time'];
 
-		$insert = mysql_query("INSERT INTO `new_data`(`school_post`, `date_time`) VALUES('$school_post', '$date_time')", $connection);
+		$insert = mysqli_query($connection,"INSERT INTO `new_data`(`school_post`, `date_time`) VALUES('$school_post', '$date_time')");
 
 		if($insert){
 					$message[] = 'Registration Seccessfully';

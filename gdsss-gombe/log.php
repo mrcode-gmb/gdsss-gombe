@@ -1,6 +1,6 @@
  <?php
 
-	include_once"conns.php";
+	include "conns.php";
     
 	session_start();
 
@@ -8,18 +8,19 @@
 		$pnumber = $_POST['pnumber'];
 		$password = $_POST['password'];
 		
-		$select = mysql_query("SELECT * FROM update_st WHERE pnumber = $pnumber AND password = $password", $connection);
+		$select = mysqli_query($connection, "SELECT * FROM update_st WHERE pnumber = '$pnumber' AND password = '$password'");
 
-			$row = mysql_fetch_assoc($select);
-			$name = $row['name'];
-			$image = $row['image'];
-			$password = $row['password'];
-			$_SESSION['name'] = $row['name'];
-			$_SESSION['image'] = $row['image'];
+			while($row = mysqli_fetch_assoc($select)){
+                $name = $row['name'];
+                $image = $row['image'];
+                $password = $row['password'];
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['image'] = $row['image'];
+        }
+        
+		if(mysqli_num_rows($select) > 0){
 
-		if(mysql_num_rows($select) > 0){
-
-			header('location:profile.php');
+			header('location:tech_profile.php');
 		}else{
 			$message[] = 'Invalid Login Details';
 

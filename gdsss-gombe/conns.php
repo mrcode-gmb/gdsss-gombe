@@ -1,6 +1,11 @@
- <?php
+<?php
 
-	$connection = mysql_connect("localhost", "root", "");
-	$db = mysql_select_db("sstwo", $connection);
+	$sarver_name   = 'localhost';
+	$user_name	   = 'root';
+	$pass	   = '';
+	$db	   = 'sstwo';
+
+	$connection = mysqli_connect($sarver_name,$user_name,$pass,$db);
+
 
 ?>

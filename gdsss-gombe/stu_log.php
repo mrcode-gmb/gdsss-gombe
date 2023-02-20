@@ -1,15 +1,16 @@
 <?php
 
-    include_once"conns.php";
+    include_once "conns.php";
     session_start();
 
     if(isset($_POST['submit'])){
         $parent_gsm = $_POST['parent_gsm'];
         $reg_number = $_POST['reg_number'];
         
-        $select = mysql_query("SELECT * FROM st_data WHERE parent_gsm = $parent_gsm AND reg_number = $reg_number", $connection);
+        $select = mysqli_query($connection, "SELECT * FROM st_data WHERE parent_gsm = '$parent_gsm' AND reg_number = '$reg_number'");
 
-            $row = mysql_fetch_assoc($select);
+           while( $row = mysqli_fetch_assoc($select)){
+            $id = $row['id'];
             $first_name = $row['first_name'];
             $surname = $row['surname'];
             $other_name = $row['other_name'];
@@ -19,10 +20,11 @@
             $_SESSION['surname'] = $row['surname'];
             $_SESSION['other_name'] = $row['other_name'];
             $_SESSION['image'] = $row['image'];
+            $_SESSION['id'] = $row['id'];
+        }
+        if(mysqli_num_rows($select) > 0){
 
-        if(mysql_num_rows($select) > 0){
-
-            header('location:st_profile.php');
+            header('location:student_profile.php');
         }else{
             $message[] = 'Invalid Login Details';
 

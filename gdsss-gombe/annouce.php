@@ -16,15 +16,15 @@
 
 
 <?php
-	include_once'conns.php';
+	include 'conns.php';
 
 	session_start();
 
-	$sql = mysql_query("SELECT * FROM new_data", $connection);
+	$sql = mysqli_query($connection, "SELECT * FROM new_data");
 	
-	if(mysql_num_rows($sql) > 0 ) {
+	if(mysqli_num_rows($sql) > 0 ) {
 		
-		while ($row = mysql_fetch_assoc($sql)) {
+		while ($row = mysqli_fetch_assoc($sql)) {
 				$school_post = $row['school_post'];
 				$date_time = $row['date_time'];
 

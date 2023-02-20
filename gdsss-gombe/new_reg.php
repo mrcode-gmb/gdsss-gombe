@@ -11,9 +11,9 @@
 		$image_tmp_name = $_FILES['image']['tmp_name'];
 		$image_folder = 'uploaded_img/'.$image;
 
-		$query1 = mysql_query("SELECT * FROM update_st WHERE pnumber = $pnumber", $connection);
+		$query1 = mysqli_query($connection, "SELECT * FROM update_st WHERE pnumber = $pnumber");
 
-		if(mysql_num_rows($query1) > 0){
+		if(mysqli_num_rows($query1) > 0){
 			$message[] = 'User Already Exit';
 		}else{
 			if($password != $cpassword){
@@ -21,7 +21,7 @@
 			}elseif($image_size > 20000000){
 				$message[] = 'Image Size Is To Large';
 			}else{
-				$insert = mysql_query("INSERT INTO `update_st`(`name`, `pnumber`, `password`, `image`) VALUES('$name', '$pnumber', '$password', '$image')", $connection);
+				$insert = mysqli_query($connection, "INSERT INTO `update_st`(`name`, `pnumber`, `password`, `image`) VALUES('$name', '$pnumber', '$password', '$image')");
 		
 
 				if($insert){
@@ -97,7 +97,7 @@
                         <label for="password" class="label form-label-control mb-1 mt-2 lbl">Enter Confirm Password:</label>
                         <input type="password" name="cpassword" class="label form-control form-control-lg mt-3" placeholder="Comfirm Password" required>
                         <label for="image" class="label form-label-control mb-1 mt-2 lbl">Upload Image:</label>
-                        <input type="file" name="image" class="form-control form-control-lg mt-3" accept="image/jpeg, image/jpg, image/png" required>
+                        <input type="file" name="image" class="form-control form-control-lg mt-3" accept="image/jpeg, image/jpg, image/png">
                         <button name="submit" class="btn bg-primary text-light mt-3 mb-3 mr-3 rounded float-end hover">Save !</button>
                     </form>
                 </div>

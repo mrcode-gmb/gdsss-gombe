@@ -1,13 +1,16 @@
-<?php?>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Table</title>
-	<link rel="stylesheet" type="text/css" href="../texts/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap-4.6.2-dist/css/bootstrap.min.css">
+	<script src="bootstrap-4.6.2-dist/js/jquery.slim.min.js"></script>
+	<script src="bootstrap-4.6.2-dist/js/popper.min.js"></script>
+	<script src="bootstrap-4.6.2-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid" style="width: 90%;">
 	<div class="card mt-2 mx-auto">
 	<div class="card-dody">
 	<table class="table table-responsive table-dark table-striped table-hover">
@@ -30,11 +33,11 @@
 		</tr>
 		
 			<?php
-				require_once "conn.php";
+				include "conns.php";
     
     			session_start();
 				$select = "SELECT * FROM st_data";
-				$result = mysqli_query($conn, $select);
+				$result = mysqli_query($connection, $select);
 				$sn=0;
 
 				if(mysqli_num_rows($result) > 0){
@@ -73,11 +76,29 @@
                         	  <td>".$parent_gsm."</td>
                         	  <td>".$nin_number."</td>
 							  <td>
-							  	<a href='stu_update.php?update=$id' class='btn btn-primary'>Edit</a>
+							  	<a href='student_update.php? id=$id' class='btn btn-primary'>Edit</a>
 							  </td>
 							  <td>
-							  	<a href='delete.php? id=$id' class='btn btn-danger'>Delete</a>
-							  </td></tr>";
+							  	<a href='#' class='btn btn-danger' data-target='#mymodal$id' data-toggle='modal'>Delete</a>
+							  </td>
+							  <div class='modal fade' id='mymodal$id'>
+								<div class='modal-dialog'>
+									<div class='modal-content'>
+										<div class='modal-header'>
+											<div class='modal-title'>
+												<h4>Hi Muhammda Umar Kabir!</h4>
+											</div>
+										</div>
+										<div class='modal-body'>
+											<p>Are You Sure You Want To Delete The Recoard From The School Or Not!!</p>
+										</div>
+										<div class='modal-footer'>
+											<a href='#' class='btn btn-primary' data-dismiss='modal'>Cancle</a>
+											<a href='student_delete.php? id=$id' class='btn btn-danger'>Delete</a>
+										</div>
+									</div>
+								</div>
+								</div></tr>";
 
 					}
 				}
@@ -92,5 +113,8 @@
 	</div>
 	</div>
 </div>
+<!-- <buttton class="btn btn-danger" ></buttton> -->
+
+
 </body>
 </html>

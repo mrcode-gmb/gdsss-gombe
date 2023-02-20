@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>Student Data</title>
-        <link rel="stylesheet" href="bootstrap/bootstrap/css/bootstrap.css">
+        <!-- <link rel="stylesheet" href="bootstrap/bootstrap/css/bootstrap.css"> -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="bootstrap-4.6.2-dist/css/bootstrap.min.css">
         <script src="bootstrap-4.6.2-dist/js/jquery.slim.min.js"></script>
@@ -25,7 +25,7 @@
         </style>
     </head>
     <body>
-        <div class="container-fluid bg-primary jumbotron head">
+        <!-- <div class="container-fluid bg-primary jumbotron head">
             <h3 class="p-5 text-light">TEARCHERS DATA</h3>
         </div>
         
@@ -37,63 +37,88 @@
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
               </ul>
-            
-            <div class="container bg-light table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Full_Name</th>
-                        <th>Phone_Number</th>
-                        <th>Password</th>
-                        <th>Images</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-	<?php
-	include_once"conns.php";
+             -->
+             <div class="container-fluid" style="width: 90%;">
+                <div class="card mt-2 mx-auto">
+                <div class="card-dody">
+                        <table class="table table-dark table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Full_Name</th>
+                                <th>Phone_Number</th>
+                                <th>Password</th>
+                                <th>Images</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+            <?php
+            include "conns.php";
 
-	session_start();
+            session_start();
 
-	$sql = mysql_query("SELECT * FROM update_st", $connection);
+            $sql = mysqlI_query($connection, "SELECT * FROM update_st");
 
-	if(mysql_num_rows($sql) > 0 ) {
-		
-		while ($row = mysql_fetch_assoc($sql)) {
-				$id = $row['id'];
-				$name = $row['name'];
-    			$pnumber = $row['pnumber'];
-    			$password = $row['password'];
-    			$image = $row['image'];
-                $_SESSION['id'] = $row['id'];
-
-
-				echo '<tr>
-                        <td>'.$name.'</td>
-                        <td>'.$pnumber.'</td>
-                        <td>'.$password.'</td>
-						<td><a href="uploaded_img/'.$image.'"><img src="uploaded_img/'.$image.'" accept="image/jpeg, image/jpg, image/png" width="40" height="40"></a></td>
-                        <td>'."<b><a href='sttable.php?update={$row["id"]}'>Update</a></b>".'</td>
-                        <td>'."<b><a href='' class='text-danger m-1' data-toggle='modal' data-target='#myModals'>Delete</a></b>".'</td>
-						</tr>';
-				
-			}	
-	}
-	
-
-
-?>
-                </tbody>
-                    
+            if(mysqlI_num_rows($sql) > 0 ) {
                 
+                while ($row = mysqlI_fetch_assoc($sql)) {
+                        $id = $row['id'];
+                        $name = $row['name'];
+                        $pnumber = $row['pnumber'];
+                        $password = $row['password'];
+                        $image = $row['image'];
+                        $_SESSION['id'] = $row['id'];
 
 
-            </table>
+                        echo "<tr>
+                                <td>$name</td>
+                                <td>$pnumber</td>
+                                <td>$password</td>
+                                <td><a href='uploaded_img/$image'><img src='uploaded_img/$image' accept='image/jpeg, image/jpg, image/png' width='40' height='40'></a></td>
+                                <td>
+							  	<a href='tech_update.php? id=$id' class='btn btn-primary'>Edit</a>
+							  </td>
+							  <td>
+							  	<a href='#' class='btn btn-danger' data-target='#mymodal$id' data-toggle='modal'>Delete</a>
+							  </td>
+							  <div class='modal fade' id='mymodal$id'>
+								<div class='modal-dialog'>
+									<div class='modal-content'>
+										<div class='modal-header'>
+											<div class='modal-title'>
+												<h4>Hi Muhammda Umar Kabir!</h4>
+											</div>
+										</div>
+										<div class='modal-body'>
+											<p>Are You Sure You Want To Delete The Recoard From The School Or Not!!</p>
+										</div>
+										<div class='modal-footer'>
+											<a href='#' class='btn btn-primary' data-dismiss='modal'>Cancle</a>
+											<a href='delete.php? id=$id' class='btn btn-danger'>Delete</a>
+										</div>
+									</div>
+								</div>
+								</div>
+                                </tr>";
+                        
+                    }	
+            }
             
+
+
+        ?>
+                        </tbody>
+                            
+                        
+
+
+                    </table>
+            
+                    </div>
+            </div>
         </div>
-    </div>
-     <div  class="modal fade" id="myModals">
+     <!-- <div  class="modal fade" id="myModals">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,12 +127,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                  <?php echo '<button class="btn btn-danger">'."<b><a href='stb_delete.php?id={$_SESSION["id"]}' class='text-light m-1'>Delete</a></b>".'</button>';?>
+                  
                 </div>
             </div>
         </div>
     </div>
-
+ -->
 
 
 </body>
